@@ -43,6 +43,14 @@ def number2(num2):
             num2 = Fraction(num2Whole * num2Den + num2Num, num2Den)
             return num2
 
+def convert(num):
+    whole = num.numerator // num.denominator
+    remainder = num.numerator % num.denominator
+    if remainder:
+        return str(whole)
+    else:
+        return f"{whole} {Fraction(remainder, num.denominator)}"
+
 str_num1 = input("Start Point: ")
 str_num2 = input("End Point: ")
 numPoints = int(input("Number of Points: "))
@@ -50,8 +58,11 @@ numPoints = int(input("Number of Points: "))
 no1 = number1(str_num1)
 no2 = number2(str_num2)
 answer = calculate(no1, no2, numPoints)
+mixedAnswer = []
+for z in answer:
+    mixedAnswer.append(convert(z))
 
 x = 1
 for j in range(numPoints):
-    print(f"Point {x}: ", answer[j])
+    print(f"Point {x}: ", mixedAnswer[j])
     x += 1
