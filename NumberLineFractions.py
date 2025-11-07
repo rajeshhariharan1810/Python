@@ -46,7 +46,7 @@ def number2(num2):
 def convert(num):
     whole = num.numerator // num.denominator
     remainder = num.numerator % num.denominator
-    if remainder:
+    if remainder == 0:
         return str(whole)
     else:
         return f"{whole} {Fraction(remainder, num.denominator)}"
@@ -58,9 +58,7 @@ numPoints = int(input("Number of Points: "))
 no1 = number1(str_num1)
 no2 = number2(str_num2)
 answer = calculate(no1, no2, numPoints)
-mixedAnswer = []
-for z in answer:
-    mixedAnswer.append(convert(z))
+mixedAnswer = [convert(i) for i in answer]
 
 x = 1
 for j in range(numPoints):
