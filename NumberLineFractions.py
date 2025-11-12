@@ -13,54 +13,45 @@ def calculate(num1, num2, num_points):
 
     return points
 
-def number1(num1):
-    if num1.find("/") == -1:
-        return num1
+def number(num):
+    if num.find("/") == -1:
+        return int(num)
+    numWhole = int(num[:num.index(" ")])
+    numNum = int(num[num.index(" ") + 1:num.index("/")])
+    numDen = int(num[num.index("/") + 1:])
+
+    if numWhole < 0:
+        num = Fraction(numWhole.__abs__() * numDen + numNum, numDen) * -1
+        return num
     else:
-        num1Whole = int(num1[:num1.index(" ")])
-        num1Num = int(num1[num1.index(" ") + 1 :num1.index("/")])
-        num1Den = int(num1[num1.index("/") + 1:])
-
-        if num1Whole < 0:
-            num1 = Fraction(num1Whole.__abs__() * num1Den + num1Num, num1Den) * -1
-            return num1
-        else:
-            num1 = Fraction(num1Whole * num1Den + num1Num, num1Den)
-            return num1
-
-def number2(num2):
-    if num2.find("/") == -1:
-        return num2
-    else:
-        num2Whole = int(num2[:num2.index(" ")])
-        num2Num = int(num2[num2.index(" ") + 1:num2.index("/")])
-        num2Den = int(num2[num2.index("/") + 1:])
-
-        if num2Whole < 0:
-            num2 = Fraction(num2Whole.__abs__() * num2Den + num2Num, num2Den) * -1
-            return num2
-        else:
-            num2 = Fraction(num2Whole * num2Den + num2Num, num2Den)
-            return num2
+        num = Fraction(numWhole * numDen + numNum, numDen)
+        return num
 
 def convert(num):
-    whole = num.numerator // num.denominator
-    remainder = num.numerator % num.denominator
-    if remainder == 0:
-        return str(whole)
+    if type(num) is float:
+        return num
     else:
-        return f"{whole} {Fraction(remainder, num.denominator)}"
+        whole = num.numerator // num.denominator
+        remainder = num.numerator % num.denominator
+        if remainder == 0:
+            return str(whole)
+        else:
+            return f"{whole} {Fraction(remainder, num.denominator)}"
 
-str_num1 = input("Start Point: ")
-str_num2 = input("End Point: ")
-numPoints = int(input("Number of Points: "))
+def main():
+    str_num1 = input("Start Point: ")
+    str_num2 = input("End Point: ")
+    numPoints = int(input("Number of Points: "))
 
-no1 = number1(str_num1)
-no2 = number2(str_num2)
-answer = calculate(no1, no2, numPoints)
-mixedAnswer = [convert(i) for i in answer]
+    no1 = number(str_num1)
+    no2 = number(str_num2)
+    answer = calculate(no1, no2, numPoints)
+    mixedAnswer = [convert(i) for i in answer]
 
-x = 1
-for j in range(numPoints):
-    print(f"Point {x}: ", mixedAnswer[j])
-    x += 1
+    x = 1
+    for j in range(numPoints):
+        print(f"Point {x}: ", mixedAnswer[j])
+        x += 1
+
+if __name__ == "__main__":
+    main()
